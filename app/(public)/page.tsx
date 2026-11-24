@@ -6,6 +6,7 @@ import HeroSearch from "@/components/HeroSearch";
 import SectionHeading from "@/components/SectionHeading";
 import Faq from "@/components/Faq";
 import Icon from "@/components/Icon";
+import Reveal from "@/components/Reveal";
 import ApplySteps from "@/components/ApplySteps";
 import Flag from "@/components/Flag";
 import InquiryForm from "@/components/InquiryForm";
@@ -30,9 +31,12 @@ export default function HomePage() {
       {/* Intro + stats */}
       <section className="section">
         <div className="container grid items-center gap-12 lg:grid-cols-2">
+          <Reveal dir="left">
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-xl">
             <Image src={introImage} alt="Student counselling session" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
           </div>
+          </Reveal>
+          <Reveal dir="right">
           <div>
             <p className="eyebrow">About CARE</p>
             <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 md:text-[2.5rem] md:leading-tight">{intro.title}</h2>
@@ -50,16 +54,18 @@ export default function HomePage() {
             </div>
             <Link href="/about" className="btn-primary mt-8">About CARE <ArrowRight className="h-4 w-4" /></Link>
           </div>
+          </Reveal>
         </div>
       </section>
 
       {/* Featured destinations */}
       <section className="section">
         <div className="container">
-          <SectionHeading center eyebrow="Study Destinations" title="Featured Destinations" subtitle="Choose from leading study destinations and let our advisors match you with the right university." />
+          <Reveal dir="up"><SectionHeading center eyebrow="Study Destinations" title="Featured Destinations" subtitle="Choose from leading study destinations and let our advisors match you with the right university." /></Reveal>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {destinations.map((d) => (
-              <Link key={d.slug} href={`/destinations/${d.slug}`} className="card group overflow-hidden">
+            {destinations.map((d, i) => (
+              <Reveal key={d.slug} dir={i % 3 === 0 ? "left" : i % 3 === 2 ? "right" : "up"} delay={(i % 3) * 120} className="h-full">
+              <Link href={`/destinations/${d.slug}`} className="card group block h-full overflow-hidden">
                 <div className="relative h-52 w-full overflow-hidden">
                   <Image src={d.image} alt={`Study in ${d.country}`} fill sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw" className="object-cover transition duration-500 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-900/80 to-transparent" />
@@ -78,6 +84,7 @@ export default function HomePage() {
                   </div>
                 </div>
               </Link>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -87,22 +94,28 @@ export default function HomePage() {
       {/* Services */}
       <section className="section bg-slate-50">
         <div className="container grid items-center gap-12 lg:grid-cols-2">
+          <Reveal dir="left">
           <div>
             <SectionHeading eyebrow="CARE" title="Our Services" />
             <div className="grid gap-5 sm:grid-cols-2">
-              {homeServices.map((sv) => (
-                <div key={sv.title} className="card card-accent p-5 pt-6">
+              {homeServices.map((sv, i) => (
+                <Reveal key={sv.title} dir="up" delay={(i % 2) * 100 + 150}>
+                <div className="card card-accent h-full p-5 pt-6">
                   <span className="icon-badge"><Icon name={sv.icon} className="h-6 w-6" /></span>
                   <h3 className="mt-4 font-semibold text-slate-900">{sv.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-slate-600">{sv.desc}</p>
                 </div>
+                </Reveal>
               ))}
             </div>
             <Link href="/services" className="btn-outline mt-8">View Services <ArrowRight className="h-4 w-4" /></Link>
           </div>
-          <div className="relative hidden aspect-[4/5] overflow-hidden rounded-3xl shadow-xl lg:block">
+          </Reveal>
+          <Reveal dir="right" className="hidden lg:block">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-xl">
             <Image src={servicesImage} alt="Advisors discussing a student application" fill sizes="50vw" className="object-cover" />
           </div>
+          </Reveal>
         </div>
       </section>
 
@@ -191,7 +204,7 @@ export default function HomePage() {
       {/* FAQ */}
       <section className="section bg-slate-50">
         <div className="container">
-          <SectionHeading center eyebrow="FAQ" title="Frequently Asked Questions" />
+          <Reveal dir="up"><SectionHeading center eyebrow="FAQ" title="Frequently Asked Questions" /></Reveal>
           <Faq />
         </div>
       </section>
@@ -199,6 +212,7 @@ export default function HomePage() {
       {/* Inquiry form */}
       <section id="consultation-booking-form" className="section scroll-mt-20 bg-brand-800 text-white">
         <div className="container grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <Reveal dir="left">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wider text-accent-400">Get in touch</p>
             <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-[2.5rem] md:leading-tight">Book a free consultation with our experts</h2>
@@ -207,9 +221,12 @@ export default function HomePage() {
               <Image src={formImage} alt="A student holding a book" fill sizes="50vw" className="object-cover" />
             </div>
           </div>
+          </Reveal>
+          <Reveal dir="right">
           <div className="text-slate-800">
             <InquiryForm />
           </div>
+          </Reveal>
         </div>
       </section>
     </>

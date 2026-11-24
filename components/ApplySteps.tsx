@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Icon from "@/components/Icon";
+import Reveal from "@/components/Reveal";
 import { applySteps } from "@/lib/home";
 
 // Winding "snake" journey.
@@ -32,8 +33,10 @@ function WaveRow({ steps, start, reverse }: { steps: { title: string; icon: stri
       <ol className={`absolute inset-0 grid grid-cols-5 ${reverse ? "[direction:rtl]" : ""}`}>
         {steps.map((st, k) => (
           <li key={st.title} className="flex flex-col items-center text-center [direction:ltr]" style={{ paddingTop: k % 2 ? 62 : 2 }}>
-            <Node n={start + k} icon={st.icon} />
-            <p className="mt-4 max-w-[10.5rem] text-sm font-semibold leading-snug">{st.title}</p>
+            <Reveal dir={k % 2 ? "right" : "left"} delay={k * 90} className="flex flex-col items-center">
+              <Node n={start + k} icon={st.icon} />
+              <p className="mt-4 max-w-[10.5rem] text-sm font-semibold leading-snug">{st.title}</p>
+            </Reveal>
           </li>
         ))}
       </ol>
@@ -74,12 +77,14 @@ export default function ApplySteps() {
             const left = i % 2 === 0;
             return (
               <li key={st.title}>
+                <Reveal dir={left ? "left" : "right"}>
                 <div className={`flex ${left ? "justify-start" : "justify-end"}`}>
                   <div className="flex w-[88%] items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                     <Node n={i + 1} icon={st.icon} />
                     <h3 className="text-sm font-semibold leading-snug">{st.title}</h3>
                   </div>
                 </div>
+                </Reveal>
                 {i < applySteps.length - 1 && (
                   <svg className="block h-12 w-full" viewBox="0 0 100 48" preserveAspectRatio="none" aria-hidden="true">
                     <path
