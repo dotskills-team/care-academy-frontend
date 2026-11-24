@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { MapPin, Mail, Phone, GraduationCap } from "lucide-react";
+import { MapPin, Mail, Phone } from "lucide-react";
+import Logo from "@/components/Logo";
 import { Facebook, Instagram, Linkedin } from "@/components/SocialIcons";
 import { nav, site } from "@/lib/data";
 
@@ -7,18 +8,15 @@ const socials = [
   [site.socials.facebook, Facebook, "Facebook"],
   [site.socials.instagram, Instagram, "Instagram"],
   [site.socials.linkedin, Linkedin, "LinkedIn"],
-];
+].filter(([href]) => href);
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-slate-300">
+    <footer className="bg-brand-900 text-slate-300">
       <div className="container grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="grid h-9 w-9 place-items-center rounded-lg bg-brand-600 text-accent-400">
-              <GraduationCap className="h-5 w-5" />
-            </span>
-            <span className="text-lg font-bold text-white">{site.name}</span>
+          <div className="inline-block rounded-xl bg-white px-4 py-3">
+            <Logo />
           </div>
           <p className="mt-4 text-sm leading-relaxed text-slate-400">{site.tagline}</p>
           <div className="mt-6 flex gap-3">
@@ -55,14 +53,14 @@ export default function Footer() {
           <ul className="space-y-3 text-sm text-slate-400">
             <li className="flex gap-3"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent-400" />{site.address}</li>
             <li className="flex gap-3"><Phone className="mt-0.5 h-4 w-4 shrink-0 text-accent-400" /><a href={`tel:${site.phone}`} className="hover:text-white">{site.phone}</a></li>
-            <li className="flex gap-3"><Mail className="mt-0.5 h-4 w-4 shrink-0 text-accent-400" /><a href={`mailto:${site.email}`} className="hover:text-white">{site.email}</a></li>
+            {site.email && <li className="flex gap-3"><Mail className="mt-0.5 h-4 w-4 shrink-0 text-accent-400" /><a href={`mailto:${site.email}`} className="hover:text-white">{site.email}</a></li>}
           </ul>
         </div>
       </div>
 
       <div className="border-t border-slate-800">
         <div className="container flex flex-col items-center justify-between gap-2 py-5 text-xs text-slate-500 md:flex-row">
-          <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} {site.name}. All rights reserved. Photos: Unsplash &amp; Pexels.</p>
           <p className="text-center md:text-right">
             Disclaimer: Admission and visa outcomes depend on the respective universities and
             authorities; {site.name} does not guarantee any result.

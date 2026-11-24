@@ -7,10 +7,10 @@ import { ArrowLeft, ArrowRight, CalendarCheck, ShieldCheck, Users, Building2, Gl
 import { heroSlides } from "@/lib/home";
 
 const trust = [
-  { icon: Users, value: "5,000+", label: "Students guided" },
-  { icon: Building2, value: "300+", label: "Partner universities" },
-  { icon: Globe2, value: "15+", label: "Study destinations" },
-  { icon: ShieldCheck, value: "98%", label: "Visa success rate" },
+  { icon: Globe2, value: "7", label: "European destinations" },
+  { icon: Users, value: "1-to-1", label: "Personal counselling" },
+  { icon: ShieldCheck, value: "End-to-end", label: "Application to arrival support" },
+  { icon: Building2, value: "Dhaka", label: "Office in Bangladesh" },
 ];
 
 export default function HeroSlider({ children }) {

@@ -10,13 +10,13 @@ export default function ServicesPage() {
       <section className="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
         <div className="container py-16 text-center">
           <h1 className="text-4xl font-bold">Our Services</h1>
-          <p className="mt-3 text-amber-200">Complete support from first consultation to departure.</p>
+          <p className="mt-3 text-accent-300">Complete support from first consultation to departure.</p>
         </div>
       </section>
 
       <section className="section">
         <div className="container">
-          <SectionHeading eyebrow="How We Help" title="What CARE Academy Offers" />
+          <SectionHeading eyebrow="How We Help" title="What CARE Consultancy Offers" />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((s) => (
               <div key={s.title} className="card p-6">
@@ -32,7 +32,7 @@ export default function ServicesPage() {
 
           <div className="mt-14 rounded-2xl bg-brand-700 p-10 text-center text-white">
             <h2 className="text-2xl font-bold">Not sure where to start?</h2>
-            <p className="mt-2 text-amber-200">Book a free consultation and let our counsellors guide you.</p>
+            <p className="mt-2 text-accent-300">Book a free consultation and let our counsellors guide you.</p>
             <Link href="/contact" className="btn-accent mt-6">Book Free Consultation</Link>
           </div>
         </div>

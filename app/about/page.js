@@ -1,13 +1,16 @@
+import Image from "next/image";
 import SectionHeading from "@/components/SectionHeading";
 import { stats } from "@/lib/data";
 
 export const metadata = { title: "About Us" };
 
+// PLACEHOLDER portraits (stock photos). Replace names, roles and photos with the real
+// team once the client sends them (save as public/images/team/member-N.jpg).
 const team = [
-  { name: "Team Member", role: "Founder & CEO" },
-  { name: "Team Member", role: "Head of Counselling" },
-  { name: "Team Member", role: "Visa Specialist" },
-  { name: "Team Member", role: "Admissions Officer" },
+  { name: "Team Member", role: "Founder & CEO", photo: "/images/team/member-1.jpg" },
+  { name: "Team Member", role: "Head of Counselling", photo: "/images/team/member-4.jpg" },
+  { name: "Team Member", role: "Visa Specialist", photo: "/images/team/member-3.jpg" },
+  { name: "Team Member", role: "Admissions Officer", photo: "/images/team/member-2.jpg" },
 ];
 
 export default function AboutPage() {
@@ -15,8 +18,8 @@ export default function AboutPage() {
     <>
       <section className="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
         <div className="container py-16 text-center">
-          <h1 className="text-4xl font-bold">About CARE Academy</h1>
-          <p className="mt-3 text-amber-200">Guiding students toward their global education dreams.</p>
+          <h1 className="text-4xl font-bold">About CARE Consultancy</h1>
+          <p className="mt-3 text-accent-300">Guiding students toward their global education dreams.</p>
         </div>
       </section>
 
@@ -25,9 +28,9 @@ export default function AboutPage() {
           <div>
             <SectionHeading eyebrow="Who We Are" title="Your Trusted Education Partner" />
             <p className="text-slate-600">
-              CARE Academy is a student-first education consultancy helping aspiring
-              students study at leading universities around the world. [Replace this
-              with the real company story before launch.]
+              CARE – Consultancy for Academic Research & Education is a student-first
+              consultancy based in Dhaka, helping aspiring students study at leading
+              universities in Europe. [Company profile text pending from client.]
             </p>
             <p className="mt-4 text-slate-600">
               Our experienced counsellors provide honest, personalised guidance — from
@@ -51,12 +54,15 @@ export default function AboutPage() {
           <SectionHeading center eyebrow="Our People" title="Meet the Team" />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {team.map((m, i) => (
-              <div key={i} className="card p-6 text-center">
-                <div className="mx-auto grid h-20 w-20 place-items-center rounded-full bg-brand-100 text-2xl font-bold text-brand-700">
-                  {m.name.charAt(0)}
+              <div key={i} className="card card-accent group overflow-hidden">
+                <div className="relative aspect-[4/5] w-full overflow-hidden bg-brand-50">
+                  <Image src={m.photo} alt={`${m.role}`} fill sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 25vw" className="object-cover object-top transition duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-brand-900/80 to-transparent" />
                 </div>
-                <h3 className="mt-4 font-semibold text-slate-900">{m.name}</h3>
-                <p className="text-sm text-slate-500">{m.role}</p>
+                <div className="p-5 text-center">
+                  <h3 className="font-semibold text-slate-900">{m.name}</h3>
+                  <p className="mt-1 text-sm font-medium text-brand-600">{m.role}</p>
+                </div>
               </div>
             ))}
           </div>

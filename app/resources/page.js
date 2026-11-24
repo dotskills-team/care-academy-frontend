@@ -9,13 +9,14 @@ export default function ResourcesPage() {
       <section className="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
         <div className="container py-16 text-center">
           <h1 className="text-4xl font-bold">Resources</h1>
-          <p className="mt-3 text-amber-200">Guides, blogs, downloads and the intake calendar.</p>
+          <p className="mt-3 text-accent-300">Guides, blogs, downloads and the intake calendar.</p>
         </div>
       </section>
 
       <section className="section">
         <div className="container">
           <SectionHeading eyebrow="Learn" title="Guides, Blogs & Downloads" />
+          {resources.length === 0 && <p className="text-slate-500">Guides and downloads are coming soon.</p>}
           <div className="grid gap-6 sm:grid-cols-2">
             {resources.map((r) => (
               <div key={r.title} className="card p-6">
@@ -31,7 +32,7 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      <section className="section bg-slate-50">
+      {intakes.length > 0 && <section className="section bg-slate-50">
         <div className="container">
           <SectionHeading eyebrow="Plan Ahead" title="Intake Calendar" />
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
@@ -55,7 +56,7 @@ export default function ResourcesPage() {
             </table>
           </div>
         </div>
-      </section>
+      </section>}
     </>
   );
 }

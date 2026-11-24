@@ -9,7 +9,7 @@ export default function ContactPage() {
       <section className="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
         <div className="container py-16 text-center">
           <h1 className="text-4xl font-bold">Contact Us</h1>
-          <p className="mt-3 text-amber-200">We&apos;d love to hear from you. Let&apos;s plan your future together.</p>
+          <p className="mt-3 text-accent-300">We&apos;d love to hear from you. Let&apos;s plan your future together.</p>
         </div>
       </section>
 
@@ -20,7 +20,7 @@ export default function ContactPage() {
             <div className="mt-6 space-y-4 text-slate-600">
               <p>📍 <strong>Address:</strong> {site.address}</p>
               <p>📞 <strong>Phone:</strong> {site.phone}</p>
-              <p>✉️ <strong>Email:</strong> {site.email}</p>
+              {site.email && <p>✉️ <strong>Email:</strong> {site.email}</p>}
               <p>
                 💬 <strong>WhatsApp:</strong>{" "}
                 <a href={`https://wa.me/${site.whatsapp}`} className="text-brand-700 hover:underline">

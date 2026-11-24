@@ -1,7 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import InquiryForm from "@/components/InquiryForm";
+import Flag from "@/components/Flag";
 import { destinations } from "@/lib/data";
 
 export function generateStaticParams() {
@@ -18,7 +19,6 @@ export default function CountryPage({ params }) {
   if (!d) return notFound();
 
   const facts = [
-    { label: "Universities", value: `${d.universities}+` },
     { label: "Tuition", value: d.tuition },
     { label: "Visa", value: d.visa },
     { label: "Work Rules", value: d.workRules },
@@ -30,11 +30,11 @@ export default function CountryPage({ params }) {
       <section className="relative text-white">
         <div className="relative h-72 w-full">
           <Image src={d.image} alt={d.country} fill sizes="100vw" className="object-cover" priority />
-          <div className="absolute inset-0 bg-slate-900/60" />
+          <div className="absolute inset-0 bg-brand-900/65" />
         </div>
         <div className="container absolute inset-0 flex flex-col justify-center">
-          <p className="text-sm text-amber-200">Study Destination</p>
-          <h1 className="text-4xl font-bold md:text-5xl">{d.flag} Study in {d.country}</h1>
+          <p className="text-sm text-accent-300">Study Destination</p>
+          <h1 className="flex items-center gap-4 text-4xl font-bold md:text-5xl"><Flag code={d.code} name={d.country} className="h-8 w-12" /> Study in {d.country}</h1>
         </div>
       </section>
 

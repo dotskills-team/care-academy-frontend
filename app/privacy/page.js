@@ -19,7 +19,7 @@ export default function PrivacyPage() {
           <h2 className="text-xl font-semibold text-slate-900">How We Use It</h2>
           <p>Your information is used solely to respond to your inquiries and provide our consultancy services. We do not sell your data to third parties.</p>
           <h2 className="text-xl font-semibold text-slate-900">Contact</h2>
-          <p>For privacy questions, email us at {site.email}.</p>
+          <p>For privacy questions, contact us on {site.phone}{site.email ? ` or email ${site.email}` : ""}.</p>
         </div>
       </div>
     </section>

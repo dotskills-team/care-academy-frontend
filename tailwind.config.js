@@ -12,29 +12,15 @@ module.exports = {
     },
     extend: {
       colors: {
-        // CARE Academy brand palette — turmeric yellow (holud) + navy slate.
+        // CARE Consultancy: navy / royal blue, sky blue and gold on white.
         brand: {
-          50: '#eef6ff',
-          100: '#d9ecff',
-          200: '#bcddff',
-          300: '#8ec7ff',
-          400: '#59a6ff',
-          500: '#2f83f7',
-          600: '#1b63ec',
-          700: '#174ed4',
-          800: '#1941ac',
-          900: '#1a3b88',
+          50: '#f0f7ff', 100: '#e0f0ff', 200: '#bde0fb', 300: '#87CEEB', 400: '#4fa3e0',
+          500: '#2a6fd0', 600: '#1d4fa8', 700: '#163f86', 800: '#12306a', 900: '#0c2150',
         },
-        // Turmeric yellow (holud) accent
+        // Gold accent
         accent: {
-          50: '#FFFBEB',
-          100: '#FEF3C7',
-          200: '#FDE68A',
-          300: '#FCD34D',
-          400: '#FBBF24',
-          500: '#F4B400',
-          600: '#D49A00',
-          700: '#A16207',
+          50: '#FFF9E5', 100: '#FEEFB8', 200: '#FCE08A', 300: '#F8D062',
+          400: '#F2BE3A', 500: '#E5A912', 600: '#C28C0A', 700: '#8F6606',
         },
       },
       fontFamily: {

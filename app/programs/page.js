@@ -9,7 +9,7 @@ export default function ProgramsPage() {
       <section className="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
         <div className="container py-16 text-center">
           <h1 className="text-4xl font-bold">Study Programs</h1>
-          <p className="mt-3 text-amber-200">Browse by study level or by subject category.</p>
+          <p className="mt-3 text-accent-300">Browse by study level or by subject category.</p>
         </div>
       </section>
 
@@ -41,7 +41,6 @@ export default function ProgramsPage() {
                 <span className="text-3xl">{c.icon}</span>
                 <div>
                   <h3 className="font-semibold text-slate-900">{c.name}</h3>
-                  <p className="text-sm text-slate-500">{c.count} programs</p>
                 </div>
               </div>
             ))}

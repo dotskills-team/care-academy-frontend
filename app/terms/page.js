@@ -19,7 +19,7 @@ export default function TermsPage() {
           <h2 className="text-xl font-semibold text-slate-900">No Guarantee</h2>
           <p>Admission and visa outcomes are decided solely by the respective universities and immigration authorities. {site.name} does not guarantee any specific outcome.</p>
           <h2 className="text-xl font-semibold text-slate-900">Contact</h2>
-          <p>For any questions about these terms, email {site.email}.</p>
+          <p>For any questions about these terms, contact us on {site.phone}{site.email ? ` or email ${site.email}` : ""}.</p>
         </div>
       </div>
     </section>

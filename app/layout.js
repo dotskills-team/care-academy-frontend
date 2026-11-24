@@ -9,11 +9,12 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata = {
   title: {
-    default: `${site.name} — Study Abroad Consultancy`,
+    default: `${site.name} — Global Education. Greater Opportunities.`,
     template: `%s | ${site.name}`,
   },
   description: site.tagline,
-  keywords: ["study abroad", "education consultancy", "universities", "scholarships", "visa"],
+  metadataBase: new URL(`https://${site.domain}`),
+  keywords: ["study in Europe", "study abroad", "Bangladesh", "education consultancy", "universities", "scholarships", "visa"],
 };
 
 export default function RootLayout({ children }) {

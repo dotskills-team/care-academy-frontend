@@ -5,8 +5,11 @@ import HeroSlider from "@/components/HeroSlider";
 import HeroSearch from "@/components/HeroSearch";
 import SectionHeading from "@/components/SectionHeading";
 import Faq from "@/components/Faq";
+import Icon from "@/components/Icon";
+import ApplySteps from "@/components/ApplySteps";
+import Flag from "@/components/Flag";
 import InquiryForm from "@/components/InquiryForm";
-import { formImage } from "@/lib/home";
+import { formImage, intro, homeServices, servicesImage, introImage } from "@/lib/home";
 import { destinations, universities, scholarships, testimonials } from "@/lib/data";
 
 const badgeStyle = {
@@ -23,6 +26,33 @@ export default function HomePage() {
         <HeroSearch />
       </HeroSlider>
 
+
+      {/* Intro + stats */}
+      <section className="section">
+        <div className="container grid items-center gap-12 lg:grid-cols-2">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-xl">
+            <Image src={introImage} alt="Student counselling session" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
+          </div>
+          <div>
+            <p className="eyebrow">About CARE</p>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 md:text-[2.5rem] md:leading-tight">{intro.title}</h2>
+            <p className="mt-4 leading-relaxed text-slate-600">{intro.text}</p>
+            <div className="mt-6 flex flex-wrap gap-4">
+              {intro.stats.map((st) => (
+                <div key={st.label} className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600"><Icon name={st.icon} className="h-6 w-6" /></span>
+                  <div>
+                    <p className="text-2xl font-bold text-slate-900">{st.value}{st.suffix}</p>
+                    <p className="text-sm text-slate-500">{st.label}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <Link href="/about" className="btn-primary mt-8">About CARE <ArrowRight className="h-4 w-4" /></Link>
+          </div>
+        </div>
+      </section>
+
       {/* Featured destinations */}
       <section className="section">
         <div className="container">
@@ -31,8 +61,9 @@ export default function HomePage() {
             {destinations.map((d) => (
               <Link key={d.slug} href={`/destinations/${d.slug}`} className="card group overflow-hidden">
                 <div className="relative h-52 w-full overflow-hidden">
-                  <Image src={d.image} alt={d.country} fill sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw" className="object-cover transition duration-500 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/75 to-transparent" />
+                  <Image src={d.image} alt={`Study in ${d.country}`} fill sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw" className="object-cover transition duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-900/80 to-transparent" />
+                  <span className="absolute right-4 top-3"><Flag code={d.code} name={d.country} className="h-6 w-9" /></span>
                   <h3 className="absolute bottom-4 left-5 flex items-center gap-2 text-xl font-semibold text-white">
                     <MapPin className="h-5 w-5 text-accent-400" /> {d.country}
                   </h3>
@@ -40,9 +71,7 @@ export default function HomePage() {
                 <div className="p-5">
                   <p className="line-clamp-2 text-sm leading-relaxed text-slate-600">{d.intro}</p>
                   <div className="mt-4 flex items-center justify-between">
-                    <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">
-                      <Building2 className="h-4 w-4" /> {d.universities}+ universities
-                    </span>
+                    <span className="text-sm font-semibold text-brand-700">Study in {d.country}</span>
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-500 px-4 py-1.5 text-sm font-semibold text-slate-900 transition group-hover:bg-accent-400">
                       Discover <ArrowRight className="h-4 w-4" />
                     </span>
@@ -54,8 +83,33 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured universities */}
+
+      {/* Services */}
       <section className="section bg-slate-50">
+        <div className="container grid items-center gap-12 lg:grid-cols-2">
+          <div>
+            <SectionHeading eyebrow="CARE" title="Our Services" />
+            <div className="grid gap-5 sm:grid-cols-2">
+              {homeServices.map((sv) => (
+                <div key={sv.title} className="card card-accent p-5 pt-6">
+                  <span className="icon-badge"><Icon name={sv.icon} className="h-6 w-6" /></span>
+                  <h3 className="mt-4 font-semibold text-slate-900">{sv.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{sv.desc}</p>
+                </div>
+              ))}
+            </div>
+            <Link href="/services" className="btn-outline mt-8">View Services <ArrowRight className="h-4 w-4" /></Link>
+          </div>
+          <div className="relative hidden aspect-[4/5] overflow-hidden rounded-3xl shadow-xl lg:block">
+            <Image src={servicesImage} alt="Advisors discussing a student application" fill sizes="50vw" className="object-cover" />
+          </div>
+        </div>
+      </section>
+
+      <ApplySteps />
+
+      {/* Featured universities */}
+      {universities.length > 0 && <section className="section bg-slate-50">
         <div className="container">
           <SectionHeading center eyebrow="Universities" title="Featured Universities" subtitle="A glimpse of our partner and listed universities." />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -83,10 +137,10 @@ export default function HomePage() {
             </Link>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* Scholarships */}
-      <section className="section bg-brand-800 text-white">
+      {scholarships.length > 0 && <section className="section bg-brand-800 text-white">
         <div className="container">
           <div className="mx-auto mb-12 max-w-2xl text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-accent-400">Funding</p>
@@ -108,10 +162,10 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* Success stories */}
-      <section className="section">
+      {testimonials.length > 0 && <section className="section">
         <div className="container">
           <SectionHeading center eyebrow="Success Stories" title="What Our Students Say" />
           <div className="grid gap-6 md:grid-cols-3">
@@ -132,7 +186,7 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* FAQ */}
       <section className="section bg-slate-50">

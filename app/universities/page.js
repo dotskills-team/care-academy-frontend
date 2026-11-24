@@ -34,7 +34,7 @@ function UniversitiesInner() {
       <section className="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
         <div className="container py-16 text-center">
           <h1 className="text-4xl font-bold">Universities</h1>
-          <p className="mt-3 text-amber-200">Search and filter from our listed universities.</p>
+          <p className="mt-3 text-accent-300">Search and filter from our listed universities.</p>
         </div>
       </section>
 
@@ -62,7 +62,7 @@ function UniversitiesInner() {
             </select>
           </div>
 
-          <p className="mb-4 text-sm text-slate-500">{filtered.length} universities found</p>
+          {universities.length > 0 && <p className="mb-4 text-sm text-slate-500">{filtered.length} universities found</p>}
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((u) => (
@@ -88,7 +88,7 @@ function UniversitiesInner() {
           </div>
 
           {filtered.length === 0 && (
-            <p className="py-16 text-center text-slate-500">No universities match your filters.</p>
+            <p className="py-16 text-center text-slate-500">{universities.length === 0 ? "Partner universities will be listed here soon." : "No universities match your filters."}</p>
           )}
         </div>
       </section>
