@@ -6,14 +6,20 @@ import Image from "next/image";
 import { ArrowLeft, ArrowRight, CalendarCheck, ShieldCheck, Users, Building2, Globe2 } from "lucide-react";
 import { heroSlides } from "@/lib/home";
 
-const trust = [
-  { icon: Globe2, value: "7", label: "European destinations" },
+const fixedTrust = [
   { icon: Users, value: "1-to-1", label: "Personal counselling" },
   { icon: ShieldCheck, value: "End-to-end", label: "Application to arrival support" },
   { icon: Building2, value: "Dhaka", label: "Office in Bangladesh" },
 ];
 
-export default function HeroSlider({ children }: { children: React.ReactNode }) {
+export default function HeroSlider({ children, destinationCount }: { children: React.ReactNode; destinationCount: number }) {
+  // The destination tile is left out rather than showing "0"
+  const trust = [
+    ...(destinationCount > 0
+      ? [{ icon: Globe2, value: String(destinationCount), label: "European destinations" }]
+      : []),
+    ...fixedTrust,
+  ];
   const [i, setI] = useState(0);
   const n = heroSlides.length;
 

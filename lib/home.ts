@@ -25,8 +25,8 @@ export const formImage = "/images/form-student.jpg";
 export const intro = {
   title: "Global Education. Greater Opportunities.",
   text: "CARE – Consultancy for Academic Research & Education is based in Dhaka and guides students through every step of studying abroad, from choosing a university to settling in after arrival. We are launching with Sweden, Spain, Malta, Finland, the Netherlands, Italy and Romania.",
+  // The home page puts the live country count in front of these
   stats: [
-    { value: 7, suffix: "", label: "European Countries", icon: "Globe2" },
     { value: 7, suffix: "", label: "Core Services", icon: "ClipboardCheck" },
   ],
 };

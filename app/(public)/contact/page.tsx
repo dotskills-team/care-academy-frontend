@@ -1,4 +1,4 @@
-import InquiryForm from "@/components/InquiryForm";
+import InquiryFormSection from "@/components/InquiryFormSection";
 import { site } from "@/lib/data";
 
 export const metadata = { title: "Contact Us" };
@@ -42,7 +42,7 @@ export default function ContactPage() {
 
           <div>
             <h2 className="mb-4 text-2xl font-bold text-slate-900">Send an Inquiry</h2>
-            <InquiryForm />
+            <InquiryFormSection />
           </div>
         </div>
       </section>
