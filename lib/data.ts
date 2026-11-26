@@ -37,28 +37,12 @@ export const nav = [
   { label: "Contact Us", href: "/contact" },
 ];
 
+// Countries come from the API (lib/api/countries.ts). The destination count shown next
+// to these stats is added by the pages.
 export const stats = [
-  { value: "7", label: "European destinations" },
   { value: "1-to-1", label: "Personal counselling" },
   { value: "End-to-end", label: "Application to arrival" },
   { value: "Dhaka", label: "Based in Bangladesh" },
-];
-
-const TBC = "To be confirmed";
-const mk = (slug: string, country: string, code: string, intro: string) => ({
-  slug, country, code, intro,
-  image: `/images/destinations/${slug}.jpg`,
-  tuition: TBC, visa: TBC, workRules: TBC, intakes: [TBC],
-});
-
-export const destinations = [
-  mk("sweden", "Sweden", "se", "Innovation-led universities, a strong research culture and an English-friendly study environment in Scandinavia."),
-  mk("spain", "Spain", "es", "Respected universities and business schools, a vibrant lifestyle and a growing range of English-taught programmes."),
-  mk("malta", "Malta", "mt", "An English-speaking Mediterranean island with a compact, welcoming student community and EU access."),
-  mk("finland", "Finland", "fi", "A top-ranked education system, research-driven teaching and a safe, high-quality living environment."),
-  mk("netherlands", "Netherlands", "nl", "A pioneer in English-taught degrees with internationally recognised universities and a global outlook."),
-  mk("italy", "Italy", "it", "Historic universities, strong design, engineering and arts programmes, and scholarships for international students."),
-  mk("romania", "Romania", "ro", "Affordable, EU-recognised education with strong programmes in medicine, engineering and IT."),
 ];
 
 export const programs = [
@@ -91,16 +75,11 @@ export const services = [
 
 // Pending from client. Pages render an empty-state when these are [].
 export type Scholarship = { name: string; country: string; amount: string; level: string };
-export type University = {
-  name: string; country: string; city: string; type: string; subjects: string;
-  ielts: string; fee: string; intake: string; image: string;
-};
 export type Testimonial = { name: string; course: string; quote: string; image: string };
 export type Intake = { month: string; countries: string; note: string };
 export type Resource = { type: string; title: string; desc: string };
 
 export const scholarships: Scholarship[] = [];
-export const universities: University[] = [];
 export const testimonials: Testimonial[] = [];
 export const intakes: Intake[] = [];
 export const resources: Resource[] = [];

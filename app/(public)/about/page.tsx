@@ -1,6 +1,7 @@
 import Image from "next/image";
 import SectionHeading from "@/components/SectionHeading";
 import { stats } from "@/lib/data";
+import { getCountries } from "@/lib/api/countries";
 
 export const metadata = { title: "About Us" };
 
@@ -13,7 +14,13 @@ const team = [
   { name: "Team Member", role: "Admissions Officer", photo: "/images/team/member-2.jpg" },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const countries = await getCountries();
+  const allStats = [
+    ...(countries.length ? [{ value: String(countries.length), label: "European destinations" }] : []),
+    ...stats,
+  ];
+
   return (
     <>
       <section className="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
@@ -39,7 +46,7 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="grid grid-cols-2 gap-5">
-            {stats.map((s) => (
+            {allStats.map((s) => (
               <div key={s.label} className="card p-6 text-center">
                 <p className="text-3xl font-bold text-brand-700">{s.value}</p>
                 <p className="mt-1 text-sm text-slate-600">{s.label}</p>

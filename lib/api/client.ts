@@ -5,6 +5,17 @@ import { ApiError, type ApiEnvelope } from "./types";
 const RAW = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api/v1").replace(/\/+$/, "");
 export const API_BASE = RAW.endsWith("/api/v1") ? RAW : `${RAW}/api/v1`;
 
+/**
+ * Browser URL for a stored image path. "/uploads/..." lives on the API origin (with the
+ * production proxy API_BASE is relative and next.config.js rewrites /uploads instead).
+ */
+export function assetUrl(path: string): string {
+  if (path.startsWith("/uploads/") && /^https?:\/\//.test(API_BASE)) {
+    return `${new URL(API_BASE).origin}${path}`;
+  }
+  return path;
+}
+
 interface RequestOptions {
   method?: "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
   body?: unknown;
@@ -36,13 +47,17 @@ export async function apiRequest<T>(
   { method = "GET", body, signal }: RequestOptions = {},
   canRetry = true,
 ): Promise<ApiEnvelope<T>> {
+  // FormData is sent as is: the browser sets the multipart header with its boundary
+  const isForm = typeof FormData !== "undefined" && body instanceof FormData;
+  const isJson = body !== undefined && !isForm;
+
   let res: Response;
   try {
     res = await fetch(`${API_BASE}${path}`, {
       method,
       credentials: "include",
-      headers: body === undefined ? undefined : { "Content-Type": "application/json" },
-      body: body === undefined ? undefined : JSON.stringify(body),
+      headers: isJson ? { "Content-Type": "application/json" } : undefined,
+      body: isForm ? (body as FormData) : isJson ? JSON.stringify(body) : undefined,
       signal,
     });
   } catch (err) {
