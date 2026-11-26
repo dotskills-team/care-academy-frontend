@@ -6,7 +6,7 @@ import {
   Send, CheckCircle2, MessageSquareText,
 } from "lucide-react";
 import Flag from "@/components/Flag";
-import { destinations } from "@/lib/data";
+import type { Country } from "@/lib/api/countries";
 
 type FormState = {
   name: string; phone: string; email: string; countries: string[]; level: string; program: string;
@@ -23,7 +23,12 @@ const empty: FormState = {
 const base =
   "w-full rounded-lg border border-slate-200 bg-slate-50/60 py-2 pr-2 text-sm text-slate-800 placeholder:text-slate-400 transition focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-100";
 
-export default function InquiryForm({ compact }: { compact?: boolean }) {
+type Props = {
+  compact?: boolean;
+  countryOptions: Pick<Country, "slug" | "name" | "code">[];
+};
+
+export default function InquiryForm({ compact, countryOptions }: Props) {
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState(empty);
 
@@ -92,16 +97,16 @@ export default function InquiryForm({ compact }: { compact?: boolean }) {
         </div>
 
         {/* Country chips */}
-        <div>
+        {countryOptions.length > 0 && <div>
           <Label>Preferred Country</Label>
           <div className="mt-1.5 flex flex-wrap gap-1.5">
-            {destinations.map((d) => {
-              const on = form.countries.includes(d.country);
+            {countryOptions.map((d) => {
+              const on = form.countries.includes(d.name);
               return (
                 <button
                   type="button"
                   key={d.slug}
-                  onClick={() => toggleCountry(d.country)}
+                  onClick={() => toggleCountry(d.name)}
                   aria-pressed={on}
                   className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition ${
                     on
@@ -109,13 +114,13 @@ export default function InquiryForm({ compact }: { compact?: boolean }) {
                       : "border-slate-200 bg-white text-slate-700 hover:border-brand-300 hover:bg-brand-50"
                   }`}
                 >
-                  <Flag code={d.code} name={d.country} className="h-3 w-4" />
-                  {d.country}
+                  <Flag code={d.code} name={d.name} className="h-3 w-4" />
+                  {d.name}
                 </button>
               );
             })}
           </div>
-        </div>
+        </div>}
 
         {/* Level pills */}
         <div>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Quote, MapPin, GraduationCap, Building2, Wallet, BadgeCheck } from "lucide-react";
+import { ArrowRight, Quote, MapPin, GraduationCap, Building2, Wallet } from "lucide-react";
 import HeroSlider from "@/components/HeroSlider";
 import HeroSearch from "@/components/HeroSearch";
 import SectionHeading from "@/components/SectionHeading";
@@ -9,21 +9,30 @@ import Icon from "@/components/Icon";
 import Reveal from "@/components/Reveal";
 import ApplySteps from "@/components/ApplySteps";
 import Flag from "@/components/Flag";
-import InquiryForm from "@/components/InquiryForm";
+import InquiryFormSection from "@/components/InquiryFormSection";
 import { formImage, intro, homeServices, servicesImage, introImage } from "@/lib/home";
-import { destinations, universities, scholarships, testimonials } from "@/lib/data";
+import UniversityCard from "@/components/universities/UniversityCard";
+import { scholarships, testimonials } from "@/lib/data";
+import { getCountries } from "@/lib/api/countries";
+import { getUniversities } from "@/lib/api/universities";
 
-const badgeStyle: Record<string, string> = {
-  Partner: "bg-green-100 text-green-800",
-  "Non-partner": "bg-slate-100 text-slate-700",
-  "Research Listing": "bg-accent-100 text-accent-700",
-};
+export default async function HomePage() {
+  const [countries, { universities: featuredUniversities }] = await Promise.all([
+    getCountries(),
+    getUniversities({ featured: true, limit: 3 }),
+  ]);
+  const featured = countries.filter((c) => c.isFeatured);
+  const introStats = [
+    ...(countries.length
+      ? [{ value: countries.length, suffix: "", label: "European Countries", icon: "Globe2" }]
+      : []),
+    ...intro.stats,
+  ];
 
-export default function HomePage() {
   return (
     <>
       {/* Hero + search */}
-      <HeroSlider>
+      <HeroSlider destinationCount={countries.length}>
         <HeroSearch />
       </HeroSlider>
 
@@ -42,7 +51,7 @@ export default function HomePage() {
             <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 md:text-[2.5rem] md:leading-tight">{intro.title}</h2>
             <p className="mt-4 leading-relaxed text-slate-600">{intro.text}</p>
             <div className="mt-6 flex flex-wrap gap-4">
-              {intro.stats.map((st) => (
+              {introStats.map((st) => (
                 <div key={st.label} className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
                   <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600"><Icon name={st.icon} className="h-6 w-6" /></span>
                   <div>
@@ -59,25 +68,25 @@ export default function HomePage() {
       </section>
 
       {/* Featured destinations */}
-      <section className="section">
+      {featured.length > 0 && <section className="section">
         <div className="container">
           <Reveal dir="up"><SectionHeading center eyebrow="Study Destinations" title="Featured Destinations" subtitle="Choose from leading study destinations and let our advisors match you with the right university." /></Reveal>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {destinations.map((d, i) => (
+            {featured.map((d, i) => (
               <Reveal key={d.slug} dir={i % 3 === 0 ? "left" : i % 3 === 2 ? "right" : "up"} delay={(i % 3) * 120} className="h-full">
               <Link href={`/destinations/${d.slug}`} className="card group block h-full overflow-hidden">
-                <div className="relative h-52 w-full overflow-hidden">
-                  <Image src={d.image} alt={`Study in ${d.country}`} fill sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw" className="object-cover transition duration-500 group-hover:scale-105" />
+                <div className="relative h-52 w-full overflow-hidden bg-brand-700">
+                  {d.image && <Image src={d.image} alt={`Study in ${d.name}`} fill sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw" className="object-cover transition duration-500 group-hover:scale-105" />}
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-900/80 to-transparent" />
-                  <span className="absolute right-4 top-3"><Flag code={d.code} name={d.country} className="h-6 w-9" /></span>
+                  <span className="absolute right-4 top-3"><Flag code={d.code} name={d.name} className="h-6 w-9" /></span>
                   <h3 className="absolute bottom-4 left-5 flex items-center gap-2 text-xl font-semibold text-white">
-                    <MapPin className="h-5 w-5 text-accent-400" /> {d.country}
+                    <MapPin className="h-5 w-5 text-accent-400" /> {d.name}
                   </h3>
                 </div>
                 <div className="p-5">
                   <p className="line-clamp-2 text-sm leading-relaxed text-slate-600">{d.intro}</p>
                   <div className="mt-4 flex items-center justify-between">
-                    <span className="text-sm font-semibold text-brand-700">Study in {d.country}</span>
+                    <span className="text-sm font-semibold text-brand-700">Study in {d.name}</span>
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-500 px-4 py-1.5 text-sm font-semibold text-slate-900 transition group-hover:bg-accent-400">
                       Discover <ArrowRight className="h-4 w-4" />
                     </span>
@@ -88,7 +97,7 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </section>}
 
 
       {/* Services */}
@@ -122,26 +131,12 @@ export default function HomePage() {
       <ApplySteps />
 
       {/* Featured universities */}
-      {universities.length > 0 && <section className="section bg-slate-50">
+      {featuredUniversities.length > 0 && <section className="section bg-slate-50">
         <div className="container">
           <SectionHeading center eyebrow="Universities" title="Featured Universities" subtitle="A glimpse of our partner and listed universities." />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {universities.slice(0, 3).map((u) => (
-              <div key={u.name} className="card card-accent group overflow-hidden">
-                <div className="relative h-48 w-full overflow-hidden">
-                  <Image src={u.image} alt={u.name} fill sizes="(max-width:1024px) 50vw, 33vw" className="object-cover transition duration-500 group-hover:scale-105" />
-                </div>
-                <div className="p-5">
-                  <span className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold ${badgeStyle[u.type]}`}>
-                    <BadgeCheck className="h-3.5 w-3.5" /> {u.type}
-                  </span>
-                  <h3 className="mt-3 text-lg font-semibold text-slate-900">{u.name}</h3>
-                  <p className="mt-1 flex items-center gap-1.5 text-sm text-slate-500">
-                    <MapPin className="h-4 w-4" /> {u.city}, {u.country}
-                  </p>
-                  <p className="mt-3 text-sm text-slate-600">{u.subjects}</p>
-                </div>
-              </div>
+            {featuredUniversities.map((u) => (
+              <UniversityCard key={u._id} university={u} />
             ))}
           </div>
           <div className="mt-10 text-center">
@@ -224,7 +219,7 @@ export default function HomePage() {
           </Reveal>
           <Reveal dir="right">
           <div className="text-slate-800">
-            <InquiryForm />
+            <InquiryFormSection />
           </div>
           </Reveal>
         </div>

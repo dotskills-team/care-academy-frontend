@@ -2,24 +2,31 @@ import Link from "next/link";
 import Image from "next/image";
 import SectionHeading from "@/components/SectionHeading";
 import Flag from "@/components/Flag";
-import { destinations } from "@/lib/data";
+import { getCountries } from "@/lib/api/countries";
 
 export const metadata = { title: "Study Destinations" };
 
-export default function DestinationsPage() {
+export default async function DestinationsPage() {
+  const countries = await getCountries();
+
   return (
     <>
       <PageHero title="Study Destinations" subtitle="Explore top countries for your international education." />
       <section className="section">
         <div className="container">
           <SectionHeading eyebrow="Countries" title="Choose Your Destination" />
+          {countries.length === 0 && (
+            <p className="py-16 text-center text-slate-500">Destinations will be listed here soon.</p>
+          )}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {destinations.map((d) => (
+            {countries.map((d) => (
               <Link key={d.slug} href={`/destinations/${d.slug}`} className="card group overflow-hidden">
-                <div className="relative h-48 w-full overflow-hidden">
-                  <Image src={d.image} alt={`Study in ${d.country}`} fill sizes="(max-width:1024px) 50vw, 33vw" className="object-cover transition duration-500 group-hover:scale-105" />
+                <div className="relative h-48 w-full overflow-hidden bg-brand-700">
+                  {d.image && (
+                    <Image src={d.image} alt={`Study in ${d.name}`} fill sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw" className="object-cover transition duration-500 group-hover:scale-105" />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-900/70 to-transparent" />
-                  <span className="absolute left-3 top-3 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-sm font-semibold"><Flag code={d.code} name={d.country} className="h-4 w-6" /> {d.country}</span>
+                  <span className="absolute left-3 top-3 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-sm font-semibold"><Flag code={d.code} name={d.name} className="h-4 w-6" /> {d.name}</span>
                 </div>
                 <div className="p-5">
                   <p className="line-clamp-3 text-sm text-slate-600">{d.intro}</p>
